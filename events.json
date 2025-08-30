@@ -1,0 +1,14 @@
+[
+  {
+    "type": "feeding",
+    "start_time": "1900-01-01T08:00:00",
+    "end_time": null,
+    "note": "fed baby at 8 am"
+  },
+  {
+    "type": "sleep",
+    "start_time": "1900-01-01T13:00:00",
+    "end_time": "1900-01-01T15:00:00",
+    "note": "baby slept from 1 pm to 3 pm"
+  }
+]

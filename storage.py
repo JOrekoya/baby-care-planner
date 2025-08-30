@@ -2,21 +2,25 @@ import json
 import os
 
 class Storage:
-    FILE_NAME = 'baby_log.json'
+    FILE = "events.json"
 
     @staticmethod
     def save_event(event):
-        data = []
-        if os.path.exists(Storage.FILE_NAME):
-            with open(Storage.FILE_NAME, 'r') as f:
-                data = json.load(f)
-        data.append(event)
-        with open(Storage.FILE_NAME, 'w') as f:
-            json.dump(data, f, indent=2)
+        events = Storage.load_events()
+        events.append(event)
+        with open(Storage.FILE, "w") as f:
+            json.dump(events, f, indent=2)
 
     @staticmethod
     def load_events():
-        if os.path.exists(Storage.FILE_NAME):
-            with open(Storage.FILE_NAME, 'r') as f:
-                return json.load(f)
-        return []
+        if not os.path.exists(Storage.FILE):
+            return []  # no file yet → return empty list
+        try:
+            with open(Storage.FILE, "r") as f:
+                content = f.read().strip()
+                if not content:  # file exists but empty
+                    return []
+                return json.loads(content)
+        except (json.JSONDecodeError, IOError):
+            # corrupted JSON or other read error
+            return []
